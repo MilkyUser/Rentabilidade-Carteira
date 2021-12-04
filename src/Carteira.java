@@ -18,71 +18,45 @@ public class Carteira {
         HashMap<Ativo, Double> carteira = new HashMap<>();
         Scanner scannerCarteira = new Scanner(carteiraFile);
 
-        while (scannerCarteira.hasNextLine()) {
-
+        do {
             String[] row = scannerCarteira.nextLine().split(";");
+
+            // Erases all non-ascii characters from String
+            row[0] = row[0].replaceAll("[^\\x00-\\x7F]", "");
             Double[] valoresPair = getPrecos(row[1], precos);
 
             switch (row[0]) {
-                case "DDI":
-                    DDI ddi = new DDI(row[1],
-                            valoresPair[0],
-                            valoresPair[1],
-                            Carteira.getPrecos("PTAX800_V", precos)[1],
-                            Carteira.getPrecos("USDBRLBMF", precos)[1]
-                    );
-                    carteira.put(ddi, Double.parseDouble(row[2]));
-                    System.out.printf(
-                            "%s, Quantidade: %f, Inicio: %f, Fim: %f, Rendimento: %f\n",
-                            ddi.nome,
-                            carteira.get(ddi),
-                            ddi.startingPrice,
-                            ddi.finalPrice,
-                            ddi.rentabilidade(carteira.get(ddi))
-                    );
-                    break;
+                case "DDI" -> carteira.put(new DDI(
+                        row[1],
+                        valoresPair[0],
+                        valoresPair[1],
+                        Carteira.getPrecos("PTAX800_V", precos)[1],
+                        Carteira.getPrecos("USDBRLBMF", precos)[1]
+                ), Double.parseDouble(row[2]));
 
-                case "DAP":
-                    DAP dap = new DAP(row[1],
-                            valoresPair[0],
-                            valoresPair[1],
-                            Carteira.getPrecos("VNA_NTNB", precos)[1]
-                    );
-                    carteira.put(dap, Double.parseDouble(row[2]));
-                    System.out.printf(
-                            "%s, Quantidade: %f, Inicio: %f, Fim: %f, Rendimento: %f\n",
-                            dap.nome,
-                            carteira.get(dap),
-                            dap.startingPrice,
-                            dap.finalPrice,
-                            dap.rentabilidade(carteira.get(dap))
-                    );
-                    break;
+                case "DAP" -> carteira.put(
+                        new DAP(
+                                row[1],
+                                valoresPair[0],
+                                valoresPair[1],
+                                Carteira.getPrecos("VNA_NTNB", precos)[1]
+                        ),
+                        Double.parseDouble(row[2])
+                );
 
-                case "Ação":
-                    Acao acao = new Acao(row[1], valoresPair[0], valoresPair[1]);
-                    carteira.put(
-                            acao,
-                            Double.parseDouble(row[2])
-                    );
-                    System.out.printf(
-                            "%s, Quantidade: %f, Inicio: %f, Fim: %f, Rendimento: %f\n",
-                            acao.nome,
-                            carteira.get(acao),
-                            acao.startingPrice,
-                            acao.finalPrice,
-                            acao.rentabilidade(carteira.get(acao))
-                    );
-                    break;
+                case "Ação" -> carteira.put(
+                        new Acao(row[1], valoresPair[0], valoresPair[1]),
+                        Double.parseDouble(row[2])
+                );
+
             }
-        }
+        } while (scannerCarteira.hasNextLine());
         this.carteira = carteira;
     }
 
     public static Double[] getPrecos(String name, Iterable<String> valores) throws
             AtivoNotFoundException
     {
-
         for (String row: valores){
             // Erases all non-ascii characters from String
             row = row.replaceAll("[^\\x00-\\x7F]", "");
@@ -100,7 +74,6 @@ public class Carteira {
 
         double sum = 0.;
         for(Ativo ativo: this.carteira.keySet()){
-            //System.out.printf("%s;%f\n", ativo.nome, ativo.rentabilidade(this.carteira.get(ativo)));
             sum += ativo.rentabilidade(this.carteira.get(ativo));
         }
         return sum;
