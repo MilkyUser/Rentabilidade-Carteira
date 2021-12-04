@@ -52,11 +52,13 @@ public class Carteira {
                             Double.parseDouble(row[2])
                     );
             }
-            this.carteira = carteira;
         }
+        this.carteira = carteira;
     }
 
-    public static Double[] getPrecos(String name, Iterable<String> valores) throws AtivoNotFoundException {
+    public static Double[] getPrecos(String name, Iterable<String> valores) throws
+            AtivoNotFoundException
+    {
 
         for (String row: valores){
             // Erases all non-ascii characters from String
@@ -73,9 +75,10 @@ public class Carteira {
 
     public Double rentabilidadeTotal(){
 
-        Double sum = 0.;
-        for(Ativo ativo: carteira.keySet()){
-            sum += carteira.get(ativo);
+        double sum = 0.;
+        for(Ativo ativo: this.carteira.keySet()){
+            System.out.printf("%s;%f\n", ativo.nome, ativo.rentabilidade(this.carteira.get(ativo)));
+            sum += ativo.rentabilidade(this.carteira.get(ativo));
         }
         return sum;
     }
