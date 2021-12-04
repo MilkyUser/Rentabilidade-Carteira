@@ -26,29 +26,34 @@ public class Carteira {
             Double[] valoresPair = getPrecos(row[1], precos);
 
             switch (row[0]) {
-                case "DDI" -> carteira.put(new DDI(
-                        row[1],
-                        valoresPair[0],
-                        valoresPair[1],
-                        Carteira.getPrecos("PTAX800_V", precos)[1],
-                        Carteira.getPrecos("USDBRLBMF", precos)[1]
-                ), Double.parseDouble(row[2]));
+                case "DDI" :
+                    carteira.put(new DDI(
+                            row[1],
+                            valoresPair[0],
+                            valoresPair[1],
+                            Carteira.getPrecos("PTAX800_V", precos)[1],
+                            Carteira.getPrecos("USDBRLBMF", precos)[1]
+                    ), Double.parseDouble(row[2]));
+                    break;
 
-                case "DAP" -> carteira.put(
-                        new DAP(
-                                row[1],
-                                valoresPair[0],
-                                valoresPair[1],
-                                Carteira.getPrecos("VNA_NTNB", precos)[1]
-                        ),
-                        Double.parseDouble(row[2])
-                );
+                case "DAP":
+                    carteira.put(
+                            new DAP(
+                                    row[1],
+                                    valoresPair[0],
+                                    valoresPair[1],
+                                    Carteira.getPrecos("VNA_NTNB", precos)[1]
+                            ),
+                            Double.parseDouble(row[2])
+                    );
+                    break;
 
-                case "Ação" -> carteira.put(
-                        new Acao(row[1], valoresPair[0], valoresPair[1]),
-                        Double.parseDouble(row[2])
-                );
-
+                case "Ação":
+                    carteira.put(
+                            new Acao(row[1], valoresPair[0], valoresPair[1]),
+                            Double.parseDouble(row[2])
+                    );
+                    break;
             }
         } while (scannerCarteira.hasNextLine());
         this.carteira = carteira;
