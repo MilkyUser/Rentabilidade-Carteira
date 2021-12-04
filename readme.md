@@ -49,3 +49,5 @@ Para compilar o programa e executar utilize os seguintes comandos:
 `javac <./caminho_até_os_arquivos_fonte/*.java> -d ./build`
 
 `java ./build/Main`
+
+Não são necessários pacotes externos.
