@@ -1,4 +1,4 @@
-#Rentabilidade da Carteira
+# Rentabilidade da Carteira
 
 Este programa calcula a rentabilidade de uma carteira de ativos para qualquer intervalo de tempo.
 Você pode fazer download dos arquivos compilados [aqui](https://drive.google.com/drive/folders/10uB7rOi-QxJoiXpUD4fenr5pzXnyqUY0?usp=sharing)
