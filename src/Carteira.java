@@ -25,32 +25,55 @@ public class Carteira {
 
             switch (row[0]) {
                 case "DDI":
-
-                    carteira.put(
-                            new DDI(row[1],
-                                    valoresPair[0],
-                                    valoresPair[1],
-                                    Carteira.getPrecos("PTAX800_V", precos)[1],
-                                    Carteira.getPrecos("USDBRLBMF", precos)[1]
-                                    ),
-                            Double.parseDouble(row[2])
+                    DDI ddi = new DDI(row[1],
+                            valoresPair[0],
+                            valoresPair[1],
+                            Carteira.getPrecos("PTAX800_V", precos)[1],
+                            Carteira.getPrecos("USDBRLBMF", precos)[1]
                     );
+                    carteira.put(ddi, Double.parseDouble(row[2]));
+                    System.out.printf(
+                            "%s, Quantidade: %f, Inicio: %f, Fim: %f, Rendimento: %f\n",
+                            ddi.nome,
+                            carteira.get(ddi),
+                            ddi.startingPrice,
+                            ddi.finalPrice,
+                            ddi.rentabilidade(carteira.get(ddi))
+                    );
+                    break;
 
                 case "DAP":
-                    carteira.put(
-                            new DAP(row[1],
-                                    valoresPair[0],
-                                    valoresPair[1],
-                                    Carteira.getPrecos("VNA_NTNB", precos)[1]
-                            ),
-                            Double.parseDouble(row[2])
+                    DAP dap = new DAP(row[1],
+                            valoresPair[0],
+                            valoresPair[1],
+                            Carteira.getPrecos("VNA_NTNB", precos)[1]
                     );
+                    carteira.put(dap, Double.parseDouble(row[2]));
+                    System.out.printf(
+                            "%s, Quantidade: %f, Inicio: %f, Fim: %f, Rendimento: %f\n",
+                            dap.nome,
+                            carteira.get(dap),
+                            dap.startingPrice,
+                            dap.finalPrice,
+                            dap.rentabilidade(carteira.get(dap))
+                    );
+                    break;
 
                 case "Ação":
+                    Acao acao = new Acao(row[1], valoresPair[0], valoresPair[1]);
                     carteira.put(
-                            new Acao(row[1], valoresPair[0], valoresPair[1]),
+                            acao,
                             Double.parseDouble(row[2])
                     );
+                    System.out.printf(
+                            "%s, Quantidade: %f, Inicio: %f, Fim: %f, Rendimento: %f\n",
+                            acao.nome,
+                            carteira.get(acao),
+                            acao.startingPrice,
+                            acao.finalPrice,
+                            acao.rentabilidade(carteira.get(acao))
+                    );
+                    break;
             }
         }
         this.carteira = carteira;
@@ -77,7 +100,7 @@ public class Carteira {
 
         double sum = 0.;
         for(Ativo ativo: this.carteira.keySet()){
-            System.out.printf("%s;%f\n", ativo.nome, ativo.rentabilidade(this.carteira.get(ativo)));
+            //System.out.printf("%s;%f\n", ativo.nome, ativo.rentabilidade(this.carteira.get(ativo)));
             sum += ativo.rentabilidade(this.carteira.get(ativo));
         }
         return sum;
