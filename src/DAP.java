@@ -1,5 +1,4 @@
 public class DAP extends Ativo{
-
     Double vna_ntnbFinalPrice;
 
     public DAP(
@@ -15,5 +14,10 @@ public class DAP extends Ativo{
     @Override
     public double rentabilidade(Double amount) {
         return amount * (this.finalPrice - this.startingPrice) * vna_ntnbFinalPrice * 1.61462;
+    }
+
+    @Override
+    public String type() {
+        return this.getClass().getSimpleName();
     }
 }

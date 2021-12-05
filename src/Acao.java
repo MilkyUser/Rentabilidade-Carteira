@@ -9,4 +9,9 @@ public class Acao extends Ativo {
         return amount*(this.finalPrice - this.startingPrice);
     }
 
+    @Override
+    public String type() {
+        return "Ação";
+    }
+
 }

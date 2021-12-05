@@ -1,5 +1,4 @@
 public class DDI extends Ativo{
-
     private final Double ptax800_VFinalPrice;
     private final Double USDBRLBMFFinalPrice;
 
@@ -19,5 +18,10 @@ public class DDI extends Ativo{
 
         return (amount * (this.finalPrice - this.startingPrice) * this.ptax800_VFinalPrice)/
                 this.USDBRLBMFFinalPrice;
+    }
+
+    @Override
+    public String type() {
+        return this.getClass().getSimpleName();
     }
 }

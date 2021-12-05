@@ -1,12 +1,12 @@
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Scanner;
 
 public class Carteira {
 
-    public HashMap<Ativo, Double> carteira;
+    public LinkedHashMap<Ativo, Double> carteira;
     public ArrayList<String> precos;
 
     public Carteira(File carteiraFile, ArrayList<String> precos) throws
@@ -15,14 +15,14 @@ public class Carteira {
     {
 
         this.precos = precos;
-        HashMap<Ativo, Double> carteira = new HashMap<>();
+        LinkedHashMap<Ativo, Double> carteira = new LinkedHashMap<>();
         Scanner scannerCarteira = new Scanner(carteiraFile);
+
 
         do {
             String[] row = scannerCarteira.nextLine().split(";");
-
-            // Erases all non-ascii characters from String
-            row[0] = row[0].replaceAll("[^\\x00-\\x7F]", "");
+            // Erases all non-printable characters from String
+            row[0] = row[0].replaceAll("\\p{C}", "");
             Double[] valoresPair = getPrecos(row[1], precos);
 
             switch (row[0]) {
@@ -50,7 +50,11 @@ public class Carteira {
 
                 case "Ação":
                     carteira.put(
-                            new Acao(row[1], valoresPair[0], valoresPair[1]),
+                            new Acao(
+                                    row[1],
+                                    valoresPair[0],
+                                    valoresPair[1]
+                            ),
                             Double.parseDouble(row[2])
                     );
                     break;
@@ -73,15 +77,6 @@ public class Carteira {
             }
         }
         throw new AtivoNotFoundException(name);
-    }
-
-    public Double rentabilidadeTotal(){
-
-        double sum = 0.;
-        for(Ativo ativo: this.carteira.keySet()){
-            sum += ativo.rentabilidade(this.carteira.get(ativo));
-        }
-        return sum;
     }
 
     public static ArrayList<String> getPrecosList(File precosFile) throws FileNotFoundException {
