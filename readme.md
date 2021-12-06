@@ -39,7 +39,7 @@ Onde:
 
 ## Saída
 
-A saída do programa é imprimida no terminal e está no mesmo formato do arquivo de entrada `carteira.csv` com a
+A saída do programa é impressa na saída padrão e está no mesmo formato do arquivo de entrada `carteira.csv` com a
 adição da rentabilidade total na última linha.
 
 ## Compilação manual
