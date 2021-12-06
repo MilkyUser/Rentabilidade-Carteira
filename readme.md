@@ -14,7 +14,7 @@ Os arquivos de entrada (que o programa usa para calcular a rentabilidade)
 não devem possuir cabeçalho e devem estar no formato csv
 (o caracter separador é `;`).
 
-###carteira.csv
+### carteira.csv
 
 Este arquivo deve seguir o seguinte formato:
 
